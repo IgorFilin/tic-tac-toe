@@ -1,0 +1,10 @@
+.containerSquare {
+    border: 2px solid;
+    width: 720px;
+    height: 720px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: beige;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,16 @@
+.square {
+    font-family: "Bauhaus 93";
+    font-size: 220px;
+    display: flex;
+    justify-content: center;
+    width: 215px;
+    height: 215px;
+    border: 2px solid;
+    background-color: aqua;
+}
+
+.text {
+    margin: 0;
+    padding: 0;
+    align-self: center;
+}
