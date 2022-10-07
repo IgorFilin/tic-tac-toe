@@ -1,7 +1,9 @@
 .container{
     min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gainsboro;
+    flex-direction: column;
+    background-color: #222222
 }

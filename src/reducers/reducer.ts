@@ -22,6 +22,6 @@ export const Reducer = (state:initialStateType=initialState,action:AllActionsTyp
 };
 
 export const changeValueAC = (id:number)=> {
-    return {type:'CHANGE-VALUE',id}as const
+    return {type:'CHANGE-VALUE',id} as const
 }
 

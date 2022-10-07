@@ -1,16 +1,13 @@
 .square {
-    font-family: "Bauhaus 93";
-    font-size: 220px;
-    display: flex;
-    justify-content: center;
-    width: 215px;
-    height: 215px;
-    border: 2px solid;
-    background-color: aqua;
+  width: 100px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid #222222;
+    cursor: pointer;
+    outline: none;
+    font-size: 60px;
 }
-
-.text {
-    margin: 0;
-    padding: 0;
-    align-self: center;
+.square:hover{
+    background-color:#f0f0f0 ;
+    transition: 0.5s ;
 }
