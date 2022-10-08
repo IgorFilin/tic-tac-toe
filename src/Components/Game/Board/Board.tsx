@@ -20,7 +20,7 @@ const winner = (array: Array<any>) => {
         const [a, b, c] = arr[i] // деструкторизируем элемент массива под название переменных
         if (array[a] && array[a] === array[b] && array[a] === array[c]) {
             // используем в условии название переменных как индексы к входящему массиву
-            return array[a]
+            return [array[a],[a,b,c]]
         }
 
     }
@@ -28,10 +28,15 @@ const winner = (array: Array<any>) => {
 }
 
 export const Board = () => {
-    const [squareArray, setSquareArray] = useState(Array(9).fill(null, 0, 9))
-    const [isMoveX, setIsMoveX] = useState(true)
+    const [squareArray, setSquareArray] = useState(Array(9).fill(null, 0, 9)) // массив значений X и O
+    const [isMoveX, setIsMoveX] = useState(true) // кто ходит
 
-    const hwoIsWin = winner(squareArray)
+
+
+    const hwoIsWin = winner(squareArray) // определяем победителя
+
+    const draw = squareArray.every((el) => el !== null) && !hwoIsWin // условие ничьи
+
 
     const onClickHandler = (index: number) => {
         let copySquareArray = [...squareArray]
@@ -54,17 +59,23 @@ export const Board = () => {
         setSquareArray(Array(9).fill(null, 0, 9))
         setIsMoveX(true)
     }
+    const result = () => {
+        return draw ?
+            <h2 className={s.winnerPlayer}>Ничья</h2>
+            :
+            hwoIsWin ?
+                <h2 className={s.winnerPlayer}>Победитель : {hwoIsWin[0]}</h2>
+                :
+                <h2 className={s.nextTry}>Следующий ход : {isMoveX ? 'X' : 'O'}</h2>
 
+    }
     return (
         <>
             <button onClick={onClickHandlerClearBoard} className={s.buttonClearBoard}>Очистить поле</button>
             <div className={s.containerSquare}>
-                {squareArray.map((el, i) => <Square key={i} value={el} onClickHandler={() => onClickHandler(i)}/>)}
+                {squareArray.map((el, i) => <Square hwoIsWin={hwoIsWin ? hwoIsWin : ['',[]]} index={i}  key={i} value={el} onClickHandler={() => onClickHandler(i)}/>)}
             </div>
-            {hwoIsWin ?
-                <h2 className={s.winnerPlayer}>Победитель : {hwoIsWin}</h2>
-                :
-                <h2 className={s.nextTry}>Следующий ход : {isMoveX ? 'X' : 'O'}</h2>}
+            {result()}
         </>
 
     );
