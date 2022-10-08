@@ -7,7 +7,7 @@
     outline: none;
     font-size: 60px;
     box-sizing: border-box;
-    font-family: Papyrus
+    font-family: Arial
 }
 .square:hover{
     background-color:#f0f0f0 ;
@@ -22,6 +22,6 @@
     outline: none;
     font-size: 60px;
     box-sizing: border-box;
-    font-family: Papyrus;
+    font-family: Arial;
     background-color: #f00c0c;
 }

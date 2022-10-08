@@ -8,15 +8,28 @@
 
 .buttonClearBoard {
     margin-bottom: 10px;
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: Arial
 }
 
 .nextTry {
     color: #1ad3c3;
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: Arial;
+    margin: 10px;
 }
 
 .winnerPlayer {
     color: red;
-    font-family: 'Hachi Maru Pop', cursive;
+    font-family: Arial;
+    margin: 10px;
 }
+
+.tableResult{
+    color: #1ad3c3;
+    font-family: Arial;
+    font-size: 20px;
+}
+table td{
+    border: 1px solid #1ad3c3;
+    padding: 3px;
+}
+

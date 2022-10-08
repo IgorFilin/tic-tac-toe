@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Square} from "./Square/Square";
 import s from './Board.module.css'
 
@@ -20,7 +20,7 @@ const winner = (array: Array<any>) => {
         const [a, b, c] = arr[i] // деструкторизируем элемент массива под название переменных
         if (array[a] && array[a] === array[b] && array[a] === array[c]) {
             // используем в условии название переменных как индексы к входящему массиву
-            return [array[a],[a,b,c]]
+            return [array[a], [a, b, c]]
         }
 
     }
@@ -30,25 +30,36 @@ const winner = (array: Array<any>) => {
 export const Board = () => {
     const [squareArray, setSquareArray] = useState(Array(9).fill(null, 0, 9)) // массив значений X и O
     const [isMoveX, setIsMoveX] = useState(true) // кто ходит
-
+    const [scoreX, setScoreX] = useState(0)
+    const [scoreO, setScoreO] = useState(0)
 
 
     const hwoIsWin = winner(squareArray) // определяем победителя
 
     const draw = squareArray.every((el) => el !== null) && !hwoIsWin // условие ничьи
 
+    useEffect(()=> {
+        if (hwoIsWin) {
+            if (hwoIsWin[0] === 'X') {
+                setScoreX(scoreX + 1)
+            } else {
+                setScoreO(scoreO + 1)
+            }
+        }
+    },[hwoIsWin && squareArray.length === 9])
 
     const onClickHandler = (index: number) => {
         let copySquareArray = [...squareArray]
         if (copySquareArray[index] || hwoIsWin) {
             return null
         }
+
         if (isMoveX) {
-            copySquareArray[index] = 'x'
+            copySquareArray[index] = 'X'
             setIsMoveX(false)
             setSquareArray(copySquareArray)
         } else {
-            copySquareArray[index] = 'o'
+            copySquareArray[index] = 'O'
             setIsMoveX(true)
             setSquareArray(copySquareArray)
         }
@@ -73,9 +84,22 @@ export const Board = () => {
         <>
             <button onClick={onClickHandlerClearBoard} className={s.buttonClearBoard}>Очистить поле</button>
             <div className={s.containerSquare}>
-                {squareArray.map((el, i) => <Square hwoIsWin={hwoIsWin ? hwoIsWin : ['',[]]} index={i}  key={i} value={el} onClickHandler={() => onClickHandler(i)}/>)}
+                {squareArray.map((el, i) => <Square hwoIsWin={hwoIsWin ? hwoIsWin : ['', []]} index={i} key={i}
+                                                    value={el} onClickHandler={() => onClickHandler(i)}/>)}
             </div>
             {result()}
+            <h2 className={s.nextTry}></h2>
+            <table className={s.tableResult}>
+                <caption>Количество побед игроков</caption>
+                <tr>
+                    <td>Очки игрока X</td>
+                    <td>Очки игрока O</td>
+                </tr>
+                <tr style={{textAlign: 'center'}}>
+                    <td style={{color: 'red', fontSize: '25px'}}>{scoreX}</td>
+                    <td style={{color: 'red', fontSize: '25px'}}>{scoreO}</td>
+                </tr>
+            </table>
         </>
 
     );
