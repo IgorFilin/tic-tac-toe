@@ -1,11 +1,13 @@
 .square {
-  width: 100px;
+    width: 100px;
     height: 100px;
     background-color: white;
     border: 1px solid #222222;
     cursor: pointer;
     outline: none;
     font-size: 60px;
+    box-sizing: border-box;
+    font-family: Papyrus
 }
 .square:hover{
     background-color:#f0f0f0 ;

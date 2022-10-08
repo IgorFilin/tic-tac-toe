@@ -1,5 +1,22 @@
 .containerSquare {
+    display: flex;
+    flex-wrap: wrap;
     width: 300px;
     height: 300px;
     background-color: red;
+}
+
+.buttonClearBoard {
+    margin-bottom: 10px;
+    font-family: 'Hachi Maru Pop', cursive;
+}
+
+.nextTry {
+    color: #1ad3c3;
+    font-family: 'Hachi Maru Pop', cursive;
+}
+
+.winnerPlayer {
+    color: red;
+    font-family: 'Hachi Maru Pop', cursive;
 }
