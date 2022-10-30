@@ -1,12 +1,17 @@
 import React from 'react';
-import './App.css';
 import {Game} from "./Components/Game/Game";
+import styled from 'styled-components'
+
+
+const AppWrapper = styled.div
+    `
+    `
 
 function App() {
     return (
-        <div className="App">
+        <AppWrapper>
             <Game/>
-        </div>
+        </AppWrapper>
     );
 }
 

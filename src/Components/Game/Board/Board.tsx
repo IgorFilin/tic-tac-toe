@@ -1,7 +1,47 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Square} from "./Square/Square";
-import s from './Board.module.css'
+import styled from 'styled-components'
 
+const ContainerSquare = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 300px;
+  background-color: red;
+`
+const ButtonClearBoard = styled.button<{ hwoIsWin: Array<any> | null, draw: boolean }>`
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid darkblue;
+  background-color: ${props => props.hwoIsWin || props.draw ? 'red' : '#f0f0f0'};
+  color: ${props => props.hwoIsWin || props.draw ? 'white' : 'black'};
+  transition: 0.8s;
+
+  &:hover {
+    background-color: antiquewhite;
+    transition: 0.8s;
+  }
+`
+const H2 = styled.h2`
+  color: #1ad3c3;
+  margin: 10px;
+`
+const TableResult = styled.table`
+  padding: 5px;
+  color: #1ad3c3;
+  font-size: 20px;
+`
+const Tr = styled.tr`
+  text-align: center;
+`
+const Td = styled.td`
+  text-align: center;
+  border: 1px solid #1ad3c3;
+  padding: 5px;
+  color: red;
+  font-size: 25px;
+`
 
 const winner = (array: Array<any>) => {
 
@@ -37,8 +77,9 @@ export const Board = () => {
     const hwoIsWin = winner(squareArray) // определяем победителя
 
     const draw = squareArray.every((el) => el !== null) && !hwoIsWin // условие ничьи
+    const useEffectDept = hwoIsWin && squareArray.length === 9
 
-    useEffect(()=> {
+    useEffect(() => {
         if (hwoIsWin) {
             if (hwoIsWin[0] === 'X') {
                 setScoreX(scoreX + 1)
@@ -46,7 +87,7 @@ export const Board = () => {
                 setScoreO(scoreO + 1)
             }
         }
-    },[hwoIsWin && squareArray.length === 9])
+    }, [useEffectDept])
 
     const onClickHandler = (index: number) => {
         let copySquareArray = [...squareArray]
@@ -72,34 +113,43 @@ export const Board = () => {
     }
     const result = () => {
         return draw ?
-            <h2 className={s.winnerPlayer}>Ничья</h2>
+            <H2>Ничья</H2>
             :
             hwoIsWin ?
-                <h2 className={s.winnerPlayer}>Победитель : {hwoIsWin[0]}</h2>
+                <H2>Победитель : {hwoIsWin[0]}</H2>
                 :
-                <h2 className={s.nextTry}>Следующий ход : {isMoveX ? 'X' : 'O'}</h2>
+                <H2>Следующий ход : {isMoveX ? 'X' : 'O'}</H2>
 
     }
+
     return (
         <>
-            <button onClick={onClickHandlerClearBoard} className={s.buttonClearBoard}>Очистить поле</button>
-            <div className={s.containerSquare}>
-                {squareArray.map((el, i) => <Square hwoIsWin={hwoIsWin ? hwoIsWin : ['', []]} index={i} key={i}
-                                                    value={el} onClickHandler={() => onClickHandler(i)}/>)}
-            </div>
+            <ButtonClearBoard
+                draw={draw}
+                hwoIsWin={hwoIsWin}
+                onClick={onClickHandlerClearBoard}>
+                Очистить поле
+            </ButtonClearBoard>
+
+            <ContainerSquare>
+                {squareArray.map((el, i) =>
+                    <Square
+                        hwoIsWin={hwoIsWin ? hwoIsWin : ['', []]} index={i} key={i}
+                        value={el}
+                        onClickHandler={() => onClickHandler(i)}/>)}
+            </ContainerSquare>
             {result()}
-            <h2 className={s.nextTry}></h2>
-            <table className={s.tableResult}>
+            <TableResult>
                 <caption>Количество побед игроков</caption>
-                <tr>
-                    <td>Очки игрока X</td>
-                    <td>Очки игрока O</td>
-                </tr>
-                <tr style={{textAlign: 'center'}}>
-                    <td style={{color: 'red', fontSize: '25px'}}>{scoreX}</td>
-                    <td style={{color: 'red', fontSize: '25px'}}>{scoreO}</td>
-                </tr>
-            </table>
+                <Tr>
+                    <Td>Очки игрока X</Td>
+                    <Td>Очки игрока O</Td>
+                </Tr>
+                <Tr>
+                    <Td>{scoreX}</Td>
+                    <Td>{scoreO}</Td>
+                </Tr>
+            </TableResult>
         </>
 
     );
